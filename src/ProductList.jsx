@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
+import { useDispatch } from 'react-redux';
+import { addItem } from './CartSlice';
+
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-    const [addedToCart, setAddedToCart] = useState({}); // State to add products to card
+    const [addedToCart, setAddedToCart] = useState({}); // State to add products to card 
+    const dispatch = useDispatch();
 
     const plantsArray = [
         {
@@ -248,15 +252,14 @@ function ProductList({ onHomeClick }) {
         setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
         setShowCart(false); // Hide the cart when navigating to About Us
     };
-
     
-const handleAddToCart = (plant) => {
-    dispatch(addItem(plant)); // Pflanze global zum Warenkorb hinzufügen
-    setAddedToCart((prev) => ({
-        ...prev,
-    [plant.name]: true, // Markiere Pflanze als hinzugefügt
-    }));
-};
+    const handleAddToCart = (plant) => {
+        dispatch(addItem(plant)); // Pflanze global zum Warenkorb hinzufügen
+        setAddedToCart((prev) => ({
+            ...prev,
+        [plant.name]: true, // Markiere Pflanze als hinzugefügt
+        }));
+    };
 
     const handleContinueShopping = (e) => {
         e.preventDefault();
